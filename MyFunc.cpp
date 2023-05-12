@@ -51,8 +51,8 @@ void file_input(std::vector<Point *> &vec) {
 
 // Поиск элементов подходящий под условие задачи
 Min_max_line *parse_vector_point(const std::vector<Point *> &vec) {  // Ужас
-  Min_max_line *out = new Min_max_line;
-  out->max.count_point = 0;
+  auto *out = new Min_max_line;
+  out->min.count_point = UINT16_MAX;
   for (auto i = vec.begin(); i != vec.end(); i++) {
     for (auto j = i; j != vec.end(); j++) {
       if (**j == **i)
@@ -63,7 +63,7 @@ Min_max_line *parse_vector_point(const std::vector<Point *> &vec) {  // Ужас
           tmp += ((*j)->y - (*i)->y) * (k->x - (*i)->x) ==
                  ((*j)->x - (*i)->x) * (k->y - (*i)->y);
       }
-      if (tmp < out->min.count_point) {
+      if (tmp and tmp < out->min.count_point) {
         out->min.count_point = tmp;
         out->min.point1 = *i;
         out->min.point2 = *j;
@@ -79,7 +79,7 @@ Min_max_line *parse_vector_point(const std::vector<Point *> &vec) {  // Ужас
 }
 
 void print_min_max_line(const Min_max_line &out) {
-  if (out.min.count_point == INT16_MAX)
+  if (out.min.count_point == UINT16_MAX)
     std::cout
         << "Нету линии на которой будет хоть 1 точка, которая не образует её.";
   else {
@@ -87,12 +87,13 @@ void print_min_max_line(const Min_max_line &out) {
               << out.min.point1->x << "\tY: " << out.min.point1->y
               << "\nX: " << out.min.point2->x << "\tY: " << out.min.point2->y
               << "\nКоличество точек лежащее на этой линии: "
-              << out.min.count_point << '\n'
-              << "Точки на линии которых лежит больше всего точек это:\nX: "
-              << out.max.point1->x << "\tY: " << out.max.point1->y
-              << "\nX: " << out.max.point2->x << "\tY: " << out.max.point2->y
-              << "\nКоличество точек лежащее на этой линии: "
-              << out.max.count_point << '\n';
+              << out.min.count_point << '\n';
+    if (out.max.count_point != 0)
+      std::cout << "Точки на линии которых лежит больше всего точек это:\nX: "
+                << out.max.point1->x << "\tY: " << out.max.point1->y
+                << "\nX: " << out.max.point2->x << "\tY: " << out.max.point2->y
+                << "\nКоличество точек лежащее на этой линии: "
+                << out.max.count_point << '\n';
   }
 }
 

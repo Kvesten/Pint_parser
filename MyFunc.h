@@ -12,7 +12,7 @@
 // Для хранения линии и кол-во точек на ней
 struct Out_line {
   Point *point1 = nullptr, *point2 = nullptr;
-  int16_t count_point = INT16_MAX;
+  uint16_t count_point = 0;
 };
 
 struct Min_max_line {
