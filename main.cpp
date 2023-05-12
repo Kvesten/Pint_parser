@@ -79,10 +79,7 @@ int main(int argc, char const *argv[]) {
   } while (f);
 
   delete setings;
-  while(vec_point.size()){
-
-  }
-  for(auto &i : vec_point)
+  for (auto &i : vec_point)
     delete i;
   vec_point.clear();
   std::cout << "Good End =)" << std::endl;
